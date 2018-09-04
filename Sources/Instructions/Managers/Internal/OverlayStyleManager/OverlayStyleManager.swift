@@ -37,13 +37,13 @@ protocol Snapshottable: class {
 protocol OverlayStyleManager: class {
     /// The overlay managed by the styleManager.
     var overlayView: OverlayView? { get set }
-
+    
     /// Called when the size of usable screen space will change.
     func viewWillTransition()
-
+    
     /// Called when the size of usable screen space did change.
     func viewDidTransition()
-
+    
     /// Show/hide the overlay.
     ///
     /// - Parameters:
@@ -52,7 +52,7 @@ protocol OverlayStyleManager: class {
     ///   - completion: a block to execute after compleion.
     func showOverlay(_ show: Bool, withDuration duration: TimeInterval,
                      completion: ((Bool) -> Void)?)
-
+    
     /// Show/hide the cutout.
     ///
     /// - Parameters:

@@ -29,7 +29,7 @@ public class CoachMarkArrowDefaultView: UIImageView, CoachMarkArrowView {
     // MARK: - Initialization
     public init(orientation: CoachMarkArrowOrientation) {
         let image, highlightedImage: UIImage?
-
+        
         if orientation == .top {
             image = UIImage(namedInInstructions: "arrow-top")
             highlightedImage = UIImage(namedInInstructions: "arrow-top-highlighted")
@@ -37,12 +37,12 @@ public class CoachMarkArrowDefaultView: UIImageView, CoachMarkArrowView {
             image = UIImage(namedInInstructions: "arrow-bottom")
             highlightedImage = UIImage(namedInInstructions: "arrow-bottom-highlighted")
         }
-
+        
         super.init(image: image, highlightedImage: highlightedImage)
-
+        
         initializeConstraints()
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         fatalError("This class does not support NSCoding.")
     }

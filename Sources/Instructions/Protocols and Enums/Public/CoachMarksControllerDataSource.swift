@@ -32,7 +32,7 @@ public protocol CoachMarksControllerDataSource: class {
     ///
     /// - Returns: the number of coach marks to display.
     func numberOfCoachMarks(for coachMarksController: CoachMarksController) -> Int
-
+    
     /// Asks for the metadata of the coach mark that will be displayed in the
     /// given nth place. All `CoachMark` metadata are optional or filled with
     /// sensible defaults. You are not forced to provide the `cutoutPath`.
@@ -46,7 +46,7 @@ public protocol CoachMarksControllerDataSource: class {
     /// - Returns: the coach mark metadata.
     func coachMarksController(_ coachMarksController: CoachMarksController,
                               coachMarkAt index: Int) -> CoachMark
-
+    
     /// Asks for the views defining the coach mark that will be displayed in
     /// the given nth place. The arrow view is optional. However, if you provide
     /// one, you are responsible for supplying the proper arrow orientation.
@@ -61,8 +61,8 @@ public protocol CoachMarksControllerDataSource: class {
     /// - Returns: a tuple packaging the body component and the arrow component.
     func coachMarksController(_ coachMarksController: CoachMarksController,
                               coachMarkViewsAt index: Int, madeFrom coachMark: CoachMark)
-    -> (bodyView: CoachMarkBodyView, arrowView: CoachMarkArrowView?)
-
+        -> (bodyView: CoachMarkBodyView, arrowView: CoachMarkArrowView?)
+    
     /// Asks for autolayout constraints needed to position `skipView` in
     /// `coachMarksController.view`.
     ///
@@ -90,7 +90,7 @@ internal protocol CoachMarksControllerProxyDataSource: class {
     ///
     /// - Returns: the number of coach marks to display.
     func numberOfCoachMarks() -> Int
-
+    
     /// Asks for the metadata of the coach mark that will be displayed in the
     /// given nth place. All `CoachMark` metadata are optional or filled with
     /// sensible defaults. You are not forced to provide the `cutoutPath`.
@@ -101,7 +101,7 @@ internal protocol CoachMarksControllerProxyDataSource: class {
     ///
     /// - Returns: the coach mark metadata.
     func coachMark(at index: Int) -> CoachMark
-
+    
     /// Asks for the views defining the coach mark that will be displayed in
     /// the given nth place. The arrow view is optional. However, if you provide
     /// one, you are responsible for supplying the proper arrow orientation.
@@ -114,7 +114,7 @@ internal protocol CoachMarksControllerProxyDataSource: class {
     /// - Returns: a tuple packaging the body component and the arrow component.
     func coachMarkViews(at index: Int, madeFrom coachMark: CoachMark)
         -> (bodyView: CoachMarkBodyView, arrowView: CoachMarkArrowView?)
-
+    
     /// Asks for autolayout constraints needed to position `skipView` in
     /// `coachMarksController.view`.
     ///

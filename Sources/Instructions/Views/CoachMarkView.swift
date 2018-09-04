@@ -27,33 +27,33 @@ import UIKit
 /// The actual coach mark that will be displayed.
 class CoachMarkView: UIView {
     // MARK: - Internal properties
-
+    
     /// The body of the coach mark (likely to contain some text).
     let bodyView: CoachMarkBodyView
-
+    
     /// The arrow view, note that the arrow view is not mandatory.
     private(set) var arrowView: CoachMarkArrowView?
-
+    
     /// The arrow orientation (where it will sit relative to the body view, i.e.
     /// above or below.)
     private(set) var arrowOrientation: CoachMarkArrowOrientation?
-
+    
     /// The offset (in case the arrow is required to overlap the body)
     var arrowOffset: CGFloat = 0.0
-
+    
     /// The control used to get to the next coach mark.
     var nextControl: UIControl? {
         return bodyView.nextControl
     }
-
+    
     // MARK: - Private properties
     private var bodyUIView: UIView { return bodyView as! UIView }
     private var arrowUIView: UIView? { return arrowView as? UIView }
     private var innerConstraints = CoachMarkViewConstraints()
     private let coachMarkLayoutHelper: CoachMarkInnerLayoutHelper
-
+    
     // MARK: - Initialization
-
+    
     /// Allocate and initliaze the coach mark view, with the given subviews.
     ///
     /// - Parameter bodyView:         the mandatory body view
@@ -64,48 +64,44 @@ class CoachMarkView: UIView {
     ///                               will make the arrow overlap.
     /// - Parameter coachMarkInnerLayoutHelper: auto-layout constraints helper.
     init(bodyView: CoachMarkBodyView, arrowView: CoachMarkArrowView? = nil,
-         arrowOrientation: CoachMarkArrowOrientation? = nil, arrowOffset: CGFloat? = nil,
+         arrowOrientation: CoachMarkArrowOrientation? = nil, arrowOffset: CGFloat? = 0.0,
          coachMarkInnerLayoutHelper: CoachMarkInnerLayoutHelper) {
-
+        
         // Due to the fact Swift 2 compiler doesn't let us enforce type check of
         // an object being a class conforming to a given protocol, we are checking
         // the type of body and arrow views at runtime. This isn't very nice, but
         // I haven't found any better way to enforce that they both are subclasses
         // of `UIView` and conform to the `CoachMarkBodyView` and
         // `CoachMarkArrowView` protocols.
-        //
-        // TODO: ❗️Use class/protocol composition to enforce both constraints.
-        //       As this will require change in the dataSource/delegate method signature
-        //       this change should be targeted for Instructions 2.0.0
         if !(bodyView is UIView) {
             fatalError("Body view must conform to CoachMarkBodyView but also be a UIView.")
         }
-
+        
         if arrowView != nil && !(arrowView is UIView) {
             fatalError("Arrow view must conform to CoachMarkArrowView but also be a UIView.")
         }
-
+        
         self.bodyView = bodyView
         self.arrowView = arrowView
         self.arrowOrientation = arrowOrientation
         self.coachMarkLayoutHelper = coachMarkInnerLayoutHelper
-
-        if let arrowOffset = arrowOffset {
-            self.arrowOffset = arrowOffset
+        
+        if arrowOffset != nil {
+            self.arrowOffset = arrowOffset!
         }
-
+        
         super.init(frame: CGRect.zero)
-
+        
         self.bodyView.highlightArrowDelegate = self
         self.layoutViewComposition()
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("This class does not support NSCoding.")
     }
-
+    
     // MARK: - Internal Method
-
+    
     //TODO: Better documentation
     /// Change the arrow horizontal position to the given position.
     /// `position` is relative to:
@@ -116,36 +112,36 @@ class CoachMarkView: UIView {
     /// - Parameter position: arrow position
     /// - Parameter offset: arrow offset
     func changeArrowPosition(to position: ArrowPosition, offset: CGFloat) {
-
+        
         guard let arrowUIView = arrowUIView else { return }
-
+        
         if innerConstraints.arrowXposition != nil {
             self.removeConstraint(innerConstraints.arrowXposition!)
         }
-
+        
         innerConstraints.arrowXposition = coachMarkLayoutHelper.horizontalArrowConstraints(
             for: (bodyView: bodyUIView, arrowView: arrowUIView), withPosition: position,
             horizontalOffset: offset)
-
+        
         self.addConstraint(innerConstraints.arrowXposition!)
     }
-
+    
     // MARK: - Private Method
-
+    
     /// Layout the body view and the arrow view together.
     fileprivate func layoutViewComposition() {
         translatesAutoresizingMaskIntoConstraints = false
-
+        
         self.addSubview(bodyUIView)
         self.addConstraints(bodyUIView.makeConstraintToFillSuperviewHorizontally())
-
+        
         if let arrowUIView = arrowUIView, let arrowOrientation = self.arrowOrientation {
             self.addSubview(arrowUIView)
-
+            
             innerConstraints.arrowXposition = coachMarkLayoutHelper.horizontalArrowConstraints(
                 for: (bodyView: bodyUIView, arrowView: arrowUIView), withPosition: .center,
                 horizontalOffset: 0)
-
+            
             self.addConstraint(innerConstraints.arrowXposition!)
             self.addConstraints(coachMarkLayoutHelper.verticalConstraints(
                 for: (bodyView: bodyUIView, arrowView: arrowUIView), in: self,
@@ -169,9 +165,9 @@ struct CoachMarkViewConstraints {
     /// The horizontal position of the arrow, likely to be at the center of the
     /// cutout path.
     fileprivate var arrowXposition: NSLayoutConstraint?
-
+    
     /// The constraint making the body stick to its parent.
     fileprivate var bodyStickToParent: NSLayoutConstraint?
-
+    
     init () { }
 }

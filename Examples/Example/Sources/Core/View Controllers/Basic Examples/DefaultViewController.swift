@@ -48,17 +48,17 @@ internal class DefaultViewController: ProfileViewController,
     }
 
     override func startInstructions() {
-        if presentationContext == .controllerWindow {
-            self.coachMarksController.start(in: .currentWindow(of: self))
-        } else if presentationContext == .controller {
-            self.coachMarksController.start(in: .viewController(self))
-        } else {
-            if let windowLevel = windowLevel {
-                self.coachMarksController.start(in: .newWindow(over: self, at: windowLevel))
-            } else {
-                self.coachMarksController.start(in: .window(over: self))
-            }
-        }
+//        if presentationContext == .controllerWindow {
+//            self.coachMarksController.start(in: .currentWindow(of: self))
+//        } else if presentationContext == .controller {
+//            self.coachMarksController.start(in: .viewController(self))
+//        } else {
+//            if let windowLevel = windowLevel {
+//                self.coachMarksController.start(in: .newWindow(over: self, at: windowLevel))
+//            } else {
+//                self.coachMarksController.start(in: .window(over: self))
+//            }
+//        }
     }
 
     enum Context {

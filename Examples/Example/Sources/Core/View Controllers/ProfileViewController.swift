@@ -68,33 +68,33 @@ internal class ProfileViewController: UIViewController,
     }
 
     func startInstructions() {
-        coachMarksController.start(in: .window(over: self))
+       // coachMarksController.start(in: .window(over: self))
     }
 
     // MARK: Protocol Conformance | CoachMarksControllerDelegate
     // Used for Snapshot testing (i. e. has nothing to do with the example)
     func coachMarksController(_ coachMarksController: CoachMarksController,
                               configureOrnamentsOfOverlay overlay: UIView) {
-        snapshotDelegate?.coachMarksController(coachMarksController,
-                                               configureOrnamentsOfOverlay: overlay)
+       // snapshotDelegate?.coachMarksController(coachMarksController,
+                                             //  configureOrnamentsOfOverlay: overlay)
     }
 
     func coachMarksController(_ coachMarksController: CoachMarksController,
                               willShow coachMark: inout CoachMark,
                               beforeChanging change: ConfigurationChange,
                               at index: Int) {
-        snapshotDelegate?.coachMarksController(coachMarksController, willShow: &coachMark,
-                                               beforeChanging: change,
-                                               at: index)
+//        snapshotDelegate?.coachMarksController(coachMarksController, willShow: &coachMark,
+//                                               beforeChanging: change,
+//                                               at: index)
     }
 
     func coachMarksController(_ coachMarksController: CoachMarksController,
                               didShow coachMark: CoachMark,
                               afterChanging change: ConfigurationChange,
                               at index: Int) {
-        snapshotDelegate?.coachMarksController(coachMarksController, didShow: coachMark,
-                                               afterChanging: change,
-                                               at: index)
+//        snapshotDelegate?.coachMarksController(coachMarksController, didShow: coachMark,
+//                                               afterChanging: change,
+//                                               at: index)
     }
 
     func coachMarksController(_ coachMarksController: CoachMarksController,

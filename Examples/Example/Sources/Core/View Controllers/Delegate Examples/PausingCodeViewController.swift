@@ -70,7 +70,7 @@ internal class PausingCodeViewController: ProfileViewController {
                                        beforeChanging change: ConfigurationChange,
                                        at index: Int) {
         if index == 2 && change == .nothing {
-            coachMarksController.flow.pause(and: pauseStyle)
+           // coachMarksController.flow.pause(and: pauseStyle)
         }
     }
 }

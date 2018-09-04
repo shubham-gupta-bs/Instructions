@@ -26,15 +26,15 @@ protocol CoachMarksViewControllerDelegate: class {
     ///
     /// - Parameter coachMarkView: the view that was tapped.
     func didTap(coachMarkView: CoachMarkView?)
-
+    
     /// The given `skipView` was tapped.
     ///
     /// - Parameter skipView: the view that was tapped.
     func didTap(skipView: CoachMarkSkipView?)
-
+    
     /// The delegate should prepare for the upcoming size transition.
     func willTransition()
-
+    
     /// The delegate should perform action, after for the size transition was completed
-    func didTransition(afterChanging change: ConfigurationChange)
+    func didTransition()
 }

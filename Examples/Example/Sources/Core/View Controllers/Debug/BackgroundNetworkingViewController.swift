@@ -95,7 +95,7 @@ extension BackgroundNetworkingViewController: URLSessionDownloadDelegate {
             if self.stopInstructions { return }
 
             if !self.coachMarksController.flow.started {
-                self.coachMarksController.start(in: .window(over: self))
+               // self.coachMarksController.start(in: .window(over: self))
             } else {
                 self.coachMarksController.flow.resume()
             }

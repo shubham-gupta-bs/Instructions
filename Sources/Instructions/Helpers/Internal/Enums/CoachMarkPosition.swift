@@ -31,7 +31,7 @@ enum CoachMarkPosition {
         case .trailing: return .trailing
         }
     }
-
+    
     case leading
     case center
     case trailing

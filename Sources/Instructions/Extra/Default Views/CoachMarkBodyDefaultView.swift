@@ -35,57 +35,59 @@ public class CoachMarkBodyDefaultView: UIControl, CoachMarkBodyView {
             } else {
                 self.views.backgroundImageView.image = self.views.backgroundImage
             }
-
+            
             self.highlightArrowDelegate?.highlightArrow(self.isHighlighted)
         }
     }
-
+    
     public var nextControl: UIControl? {
         return self
     }
-
+    
     public var nextLabel: UILabel { return views.nextLabel }
     public var hintLabel: UITextView { return views.hintLabel }
-
+    public var countTourLabel: UILabel { return views.countTourLabel }
+    
     public weak var highlightArrowDelegate: CoachMarkBodyHighlightArrowDelegate?
-
+    
     fileprivate var views = CoachMarkBodyDefaultViewHolder()
-
+    
     // MARK: - Initialization
     override public init(frame: CGRect) {
         super.init(frame: frame)
-        setupAccessibilityIdentifier()
-
+        
         let helper = CoachMarkBodyDefaultViewHelper()
-
+        
         self.setupInnerViewHierarchy(using: helper)
     }
-
+    
     convenience public init() {
         self.init(frame: CGRect.zero)
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         fatalError("This class does not support NSCoding.")
     }
-
-    public init(frame: CGRect, hintText: String, nextText: String?) {
+    
+    public init(frame: CGRect, hintText: String, nextText: String?, countText: String?) {
         super.init(frame: frame)
-
+        
         let helper = CoachMarkBodyDefaultViewHelper()
-
+        
         if let next = nextText {
             views.hintLabel.text = hintText
             views.nextLabel.text = next
+            views.countTourLabel.text = countText
+            
             setupInnerViewHierarchy(using: helper)
         } else {
             views.hintLabel.text = hintText
             setupSimpleInnerViewHierarchy(using: helper)
         }
     }
-
-    convenience public init(hintText: String, nextText: String?) {
-        self.init(frame: CGRect.zero, hintText: hintText, nextText: nextText)
+    
+    convenience public init(hintText: String, nextText: String? , countText: String?) {
+        self.init(frame: CGRect.zero, hintText: hintText, nextText: nextText , countText: countText)
     }
 }
 
@@ -94,54 +96,47 @@ private extension CoachMarkBodyDefaultView {
     //Configure the CoachMark view with a hint message and a next message
     func setupInnerViewHierarchy(using helper: CoachMarkBodyDefaultViewHelper) {
         translatesAutoresizingMaskIntoConstraints = false
-
+        
         helper.configureBackground(self.views.backgroundImageView, addTo: self)
         helper.configureHint(hintLabel, addTo: self)
         helper.configureNext(nextLabel, addTo: self)
+        helper.configureCount(countTourLabel, addTo: self)
         helper.configureSeparator(self.views.separator, addTo: self)
-
-        let views = (hintLabel: self.views.hintLabel, nextLabel: self.views.nextLabel,
+        
+        let views = (hintLabel: self.views.hintLabel, nextLabel: self.views.nextLabel,countTourLabel: self.views.countTourLabel,
                      separator: self.views.separator)
-
+        
         self.addConstraints(helper.makeHorizontalConstraints(for: views))
+        self.addConstraints(helper.makeVertiConstraints(for: views))
+        self.addConstraints(helper.makeHorizontalConstraintsForNextLable(for: views))
+        
+        self.addConstraints(helper.makeVertiConstraintsForCountLabel(for: views))
     }
-
+    
     func setupSimpleInnerViewHierarchy(using helper: CoachMarkBodyDefaultViewHelper) {
         translatesAutoresizingMaskIntoConstraints = false
-
+        
         let helper = CoachMarkBodyDefaultViewHelper()
-
+        
         helper.configureBackground(self.views.backgroundImageView, addTo: self)
         helper.configureSimpleHint(hintLabel, addTo: self)
-    }
-
-    func setupAccessibilityIdentifier() {
-        accessibilityIdentifier = AccessibilityIdentifiers.coachMarkBody
     }
 }
 
 // MARK: - View Holder
 private struct CoachMarkBodyDefaultViewHolder {
-    let nextLabel: UILabel = {
-        let nextLabel = UILabel()
-        nextLabel.accessibilityIdentifier = AccessibilityIdentifiers.coachMarkNext
-        return nextLabel
-    }()
-
-    let hintLabel: UITextView = {
-        let nextLabel = UITextView()
-        nextLabel.accessibilityIdentifier = AccessibilityIdentifiers.coachMarkHint
-        return nextLabel
-    }()
-
+    let nextLabel = UILabel()
+    let hintLabel = UITextView()
     let separator = UIView()
-
+    let countTourLabel = UILabel()
+    
     lazy var backgroundImageView: UIImageView = {
         return UIImageView(image: self.backgroundImage)
     }()
-
+    
+    
     let backgroundImage = UIImage(namedInInstructions: "background")
     let highlightedBackgroundImage = UIImage(namedInInstructions: "background-highlighted")
-
+    
     init() { }
 }

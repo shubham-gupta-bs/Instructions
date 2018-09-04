@@ -123,7 +123,7 @@ class KeyboardViewController: UIInputViewController,
                               willShow coachMark: inout CoachMark,
                               beforeChanging change: ConfigurationChange, at index: Int) {
         if index == 2 && change == .nothing {
-            coachMarksController.flow.pause(and: .hideInstructions)
+           // coachMarksController.flow.pause(and: .hideInstructions)
         }
     }
 

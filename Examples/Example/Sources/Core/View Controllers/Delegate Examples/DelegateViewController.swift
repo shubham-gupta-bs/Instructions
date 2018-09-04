@@ -36,7 +36,7 @@ class DelegateViewController: ProfileViewController, CoachMarksControllerDataSou
         super.viewDidLoad()
 
         coachMarksController.delegate = self
-        coachMarksController.animationDelegate = self
+     //   coachMarksController.animationDelegate = self
         coachMarksController.dataSource = self
 
         emailLabel?.layer.cornerRadius = 4.0

@@ -28,11 +28,9 @@ class OverlaySnapshotView: UIView {
             if visualEffectView == nil { return }
             visualEffectView.removeFromSuperview()
         }
-
+        
         didSet {
-            if visualEffectView != nil {
-                self.addSubview(visualEffectView)
-            }
+            self.addSubview(visualEffectView)
         }
     }
     var backgroundView: UIView! {
@@ -40,14 +38,12 @@ class OverlaySnapshotView: UIView {
             if backgroundView == nil { return }
             backgroundView.removeFromSuperview()
         }
-
+        
         didSet {
-            if backgroundView != nil {
-                self.addSubview(backgroundView)
-            }
+            self.addSubview(backgroundView)
         }
     }
-
+    
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         return nil
     }

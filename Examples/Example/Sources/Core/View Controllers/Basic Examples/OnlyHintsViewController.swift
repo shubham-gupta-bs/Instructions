@@ -44,7 +44,7 @@ internal class OnlyHintViewController: ProfileViewController {
     }
 
     override func startInstructions() {
-        coachMarksController.start(in: .window(over: self))
+       // coachMarksController.start(in: .window(over: self))
     }
 }
 

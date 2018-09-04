@@ -23,15 +23,15 @@
 import UIKit
 
 public class CoachMarkHelper {
-
+    
     let instructionsRootView: InstructionsRootView
     let flowManager: FlowManager
-
+    
     init(instructionsRootView: InstructionsRootView, flowManager: FlowManager) {
         self.instructionsRootView = instructionsRootView
         self.flowManager = flowManager
     }
-
+    
     /// Returns a new coach mark with a cutout path set to be
     /// around the provided UIView. The cutout path will be slightly
     /// larger than the view and have rounded corners, however you can
@@ -46,17 +46,17 @@ public class CoachMarkHelper {
     public func makeCoachMark(for view: UIView? = nil, pointOfInterest: CGPoint? = nil,
                               cutoutPathMaker: CutoutPathMaker? = nil) -> CoachMark {
         var coachMark = CoachMark()
-
+        
         guard let view = view else {
             return coachMark
         }
-
+        
         self.update(coachMark: &coachMark, usingView: view,
                     pointOfInterest: pointOfInterest, cutoutPathMaker: cutoutPathMaker)
-
+        
         return coachMark
     }
-
+    
     /// Provides default coach views.
     ///
     /// - Parameter arrow: `true` to return an instance of `CoachMarkArrowDefaultView`
@@ -69,23 +69,23 @@ public class CoachMarkHelper {
     public func makeDefaultCoachViews(withArrow arrow: Bool = true,
                                       withNextText nextText: Bool = true,
                                       arrowOrientation: CoachMarkArrowOrientation? = .top)
-    -> (bodyView: CoachMarkBodyDefaultView, arrowView: CoachMarkArrowDefaultView?) {
-
-        var coachMarkBodyView: CoachMarkBodyDefaultView
-
-        if nextText {
-            coachMarkBodyView = CoachMarkBodyDefaultView()
-        } else {
-            coachMarkBodyView = CoachMarkBodyDefaultView(hintText: "", nextText: nil)
-        }
-
-        var coachMarkArrowView: CoachMarkArrowDefaultView? = nil
-
-        if arrow { coachMarkArrowView = makeDefaultArrow(withOrientation: arrowOrientation) }
-
-        return (bodyView: coachMarkBodyView, arrowView: coachMarkArrowView)
+        -> (bodyView: CoachMarkBodyDefaultView, arrowView: CoachMarkArrowDefaultView?) {
+            
+            var coachMarkBodyView: CoachMarkBodyDefaultView
+            
+            if nextText {
+                coachMarkBodyView = CoachMarkBodyDefaultView()
+            } else {
+                coachMarkBodyView = CoachMarkBodyDefaultView(hintText: "", nextText: nil, countText : "")
+            }
+            
+            var coachMarkArrowView: CoachMarkArrowDefaultView? = nil
+            
+            if arrow { coachMarkArrowView = makeDefaultArrow(withOrientation: arrowOrientation) }
+            
+            return (bodyView: coachMarkBodyView, arrowView: coachMarkArrowView)
     }
-
+    
     /// Provides default coach views, can have a next label or just the message.
     ///
     /// - Parameter arrow: `true` to return an instance of
@@ -98,17 +98,17 @@ public class CoachMarkHelper {
     /// - Returns: new instances of the default coach views.
     public func makeDefaultCoachViews(withArrow arrow: Bool = true,
                                       arrowOrientation: CoachMarkArrowOrientation? = .top,
-                                      hintText: String, nextText: String? = nil)
-    -> (bodyView: CoachMarkBodyDefaultView, arrowView: CoachMarkArrowDefaultView?) {
-        let coachMarkBodyView = CoachMarkBodyDefaultView(hintText: hintText, nextText: nextText)
-
-        var coachMarkArrowView: CoachMarkArrowDefaultView? = nil
-
-        if arrow { coachMarkArrowView = makeDefaultArrow(withOrientation: arrowOrientation) }
-
-        return (bodyView: coachMarkBodyView, arrowView: coachMarkArrowView)
+                                      hintText: String, nextText: String? = nil, countText : String? = "")
+        -> (bodyView: CoachMarkBodyDefaultView, arrowView: CoachMarkArrowDefaultView?) {
+            let coachMarkBodyView = CoachMarkBodyDefaultView(hintText: hintText, nextText: nextText , countText: countText)
+            
+            var coachMarkArrowView: CoachMarkArrowDefaultView? = nil
+            
+            if arrow { coachMarkArrowView = makeDefaultArrow(withOrientation: arrowOrientation) }
+            
+            return (bodyView: coachMarkBodyView, arrowView: coachMarkArrowView)
     }
-
+    
     /// Updates the currently stored coach mark with a cutout path set to be
     /// around the provided UIView. The cutout path will be slightly
     /// larger than the view and have rounded corners, however you can
@@ -129,15 +129,15 @@ public class CoachMarkHelper {
                                        cutoutPathMaker: CutoutPathMaker? = nil) {
         if !flowManager.paused || flowManager.currentCoachMark == nil {
             print("updateCurrentCoachMarkForView: Something is wrong, did you" +
-                  "call updateCurrentCoachMarkForView without pausing" +
-                  "the controller first?")
+                "call updateCurrentCoachMarkForView without pausing" +
+                "the controller first?")
             return
         }
-
+        
         update(coachMark: &flowManager.currentCoachMark!, usingView: view,
                pointOfInterest: pointOfInterest, cutoutPathMaker: cutoutPathMaker)
     }
-
+    
     /// Updates the given coach mark with a cutout path set to be
     /// around the provided UIView. The cutout path will be slightly
     /// larger than the view and have rounded corners, however you can
@@ -154,11 +154,11 @@ public class CoachMarkHelper {
                          usingView view: UIView? = nil, pointOfInterest: CGPoint?,
                          cutoutPathMaker: CutoutPathMaker? = nil) {
         guard let view = view else { return }
-
+        
         let convertedFrame = instructionsRootView.convert(view.frame, from: view.superview)
-
+        
         let bezierPath: UIBezierPath
-
+        
         if let makeCutoutPathWithFrame = cutoutPathMaker {
             bezierPath = makeCutoutPathWithFrame(convertedFrame)
         } else {
@@ -166,24 +166,24 @@ public class CoachMarkHelper {
                                       byRoundingCorners: .allCorners,
                                       cornerRadii: CGSize(width: 4, height: 4))
         }
-
+        
         coachMark.cutoutPath = bezierPath
-
+        
         if let pointOfInterest = pointOfInterest {
             coachMark.pointOfInterest = instructionsRootView.convert(pointOfInterest,
-                                                                          from: view.superview)
+                                                                     from: view.superview)
         }
     }
-
+    
     internal func makeDefaultArrow(withOrientation arrowOrientation: CoachMarkArrowOrientation?)
-    -> CoachMarkArrowDefaultView {
-        var arrowOrientation = arrowOrientation
-
-        if arrowOrientation == nil {
-            arrowOrientation = .top
-        }
-
-        return CoachMarkArrowDefaultView(orientation: arrowOrientation!)
+        -> CoachMarkArrowDefaultView {
+            var arrowOrientation = arrowOrientation
+            
+            if arrowOrientation == nil {
+                arrowOrientation = .top
+            }
+            
+            return CoachMarkArrowDefaultView(orientation: arrowOrientation!)
     }
 }
 

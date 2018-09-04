@@ -65,7 +65,7 @@ internal class LargeCutoutViewController: UIViewController {
     }
 
     func startInstructions() {
-        self.coachMarksController.start(in: .window(over: self))
+       // self.coachMarksController.start(in: .window(over: self))
     }
 }
 
@@ -87,12 +87,12 @@ extension LargeCutoutViewController: CoachMarksControllerDataSource {
 
             var coachMark = coachMarksController.helper.makeCoachMark(for: tableView,
                                                                       cutoutPathMaker: pathMaker)
-            coachMark.displayOverCutoutPath = true
+         //   coachMark.displayOverCutoutPath = true
 
             return coachMark
         case 1:
             var coachMark = coachMarksController.helper.makeCoachMark(for: halfInvisibleOverlay)
-            coachMark.displayOverCutoutPath = true
+         //   coachMark.displayOverCutoutPath = true
 
             return coachMark
         default:

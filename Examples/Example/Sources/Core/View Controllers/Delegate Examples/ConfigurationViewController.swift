@@ -32,10 +32,10 @@ internal class ConfigurationViewController: DefaultViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        coachMarksController.statusBarVisibility = .hidden
-        coachMarksController.rotationStyle = .manual
-        coachMarksController.interfaceOrientations =
-            .userDefined(as: supportedInterfaceOrientations)
+//        coachMarksController.statusBarVisibility = .hidden
+//        coachMarksController.rotationStyle = .manual
+//        coachMarksController.interfaceOrientations =
+//            .userDefined(as: supportedInterfaceOrientations)
         
         instructionsNavigationController?.isLocked = true
     }
